@@ -1,5 +1,5 @@
 ﻿@page
-@model SimpleAnalyticsWeb.Pages.Datasets.CreateModel
+@model analyticsweb.Pages.Datasets.CreateModel
 @{
     ViewData["Title"] = "Create Dataset";
 }
@@ -7,10 +7,26 @@
 <h1>Create Dataset</h1>
 
 <p>
-    This page will contain a simple form to create a dataset.
-    For Phase #1, it confirms page purpose and navigation.
+    Enter a dataset name and (optionally) a description. This will be saved to the database.
 </p>
 
-<p>
-    <a asp-page="/Datasets/Index">Back to Datasets</a>
-</p>
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="Dataset.Name" class="form-label"></label>
+        <input asp-for="Dataset.Name" class="form-control" />
+        <span asp-validation-for="Dataset.Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Dataset.Description" class="form-label"></label>
+        <textarea asp-for="Dataset.Description" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="Dataset.Description" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Dataset</button>
+    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

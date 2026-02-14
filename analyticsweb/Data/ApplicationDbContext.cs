@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using analyticsweb.Models; // <-- add this so DbSet<Dataset> is recognized
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace analyticsweb.Data
@@ -9,5 +10,8 @@ namespace analyticsweb.Data
             : base(options)
         {
         }
+
+        // App tables
+        public DbSet<Dataset> Datasets { get; set; } = default!;
     }
 }

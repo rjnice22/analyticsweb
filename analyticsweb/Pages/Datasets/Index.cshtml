@@ -1,5 +1,5 @@
 ﻿@page
-@model SimpleAnalyticsWeb.Pages.Datasets.IndexModel
+@model analyticsweb.Pages.Datasets.IndexModel
 @{
     ViewData["Title"] = "Datasets";
 }
@@ -7,10 +7,61 @@
 <h1>Datasets</h1>
 
 <p>
-    This page will list datasets created by the logged-in user.
-    For Phase #1, it confirms page purpose and navigation.
+    Use the search box to find datasets by <strong>Name</strong> or <strong>Description</strong>.
+    <br />
+    Wildcards are allowed using <strong>*</strong>:
+    <ul>
+        <li><code>roof*</code> = starts with “roof”</li>
+        <li><code>*clean*</code> = contains “clean” anywhere</li>
+    </ul>
 </p>
 
-<ul>
-    <li><a asp-page="/Datasets/Create">Create a new dataset</a></li>
-</ul>
+<form method="get" class="mb-3">
+    <div class="input-group">
+        <input type="text"
+               name="q"
+               value="@Model.Q"
+               class="form-control"
+               placeholder="Search datasets (use * for wildcard)" />
+        <button type="submit" class="btn btn-primary">Search</button>
+        <a asp-page="./Index" class="btn btn-secondary">Clear</a>
+        <a asp-page="./Create" class="btn btn-success">Create New</a>
+    </div>
+</form>
+
+@if (!string.IsNullOrWhiteSpace(Model.Q))
+{
+    <p>
+        Showing results for: <strong>@Model.Q</strong>
+    </p>
+}
+
+@if (Model.Datasets.Count == 0)
+{
+    <div class="alert alert-warning">
+        No datasets found.
+    </div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Created</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var d in Model.Datasets)
+            {
+                <tr>
+                    <td>@d.Name</td>
+                    <td>@d.Description</td>
+                    <td>@d.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
