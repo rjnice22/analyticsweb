@@ -1,0 +1,40 @@
+﻿@page
+@model analyticsweb.Pages.Datasets.EditModel
+@{
+    ViewData["Title"] = "Edit Dataset";
+}
+
+<h1>Edit Dataset</h1>
+
+<p>
+    Update the dataset fields and click <strong>Save</strong>. Your changes will show immediately on the datasets list.
+</p>
+
+<form method="post">
+    <!-- Preserve the search term so the user returns to the same filtered list -->
+    <input type="hidden" asp-for="Q" />
+
+    <!-- Keep the record ID so EF updates the correct row -->
+    <input type="hidden" asp-for="Dataset.Id" />
+
+    <div class="mb-3">
+        <label asp-for="Dataset.Name" class="form-label"></label>
+        <input asp-for="Dataset.Name" class="form-control" />
+        <span asp-validation-for="Dataset.Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Dataset.Description" class="form-label"></label>
+        <textarea asp-for="Dataset.Description" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="Dataset.Description" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+
+    <!-- Cancel returns back to Index and preserves the search -->
+    <a asp-page="./Index" asp-route-q="@Model.Q" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

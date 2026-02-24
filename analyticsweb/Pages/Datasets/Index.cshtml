@@ -10,11 +10,11 @@
     Use the search box to find datasets by <strong>Name</strong> or <strong>Description</strong>.
     <br />
     Wildcards are allowed using <strong>*</strong>:
-    <ul>
-        <li><code>roof*</code> = starts with “roof”</li>
-        <li><code>*clean*</code> = contains “clean” anywhere</li>
-    </ul>
 </p>
+<ul>
+    <li><code>roof*</code> = starts with “roof”</li>
+    <li><code>*clean*</code> = contains “clean” anywhere</li>
+</ul>
 
 <form method="get" class="mb-3">
     <div class="input-group">
@@ -23,8 +23,11 @@
                value="@Model.Q"
                class="form-control"
                placeholder="Search datasets (use * for wildcard)" />
+
         <button type="submit" class="btn btn-primary">Search</button>
+
         <a asp-page="./Index" class="btn btn-secondary">Clear</a>
+
         <a asp-page="./Create" class="btn btn-success">Create New</a>
     </div>
 </form>
@@ -50,6 +53,7 @@ else
                 <th>Name</th>
                 <th>Description</th>
                 <th>Created</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -59,9 +63,19 @@ else
                     <td>@d.Name</td>
                     <td>@d.Description</td>
                     <td>@d.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>
+                        <a class="btn btn-sm btn-outline-primary"
+                           href="/Datasets/Edit?id=@d.Id&q=@Model.Q">
+                            Edit
+                        </a>
+
+                        <a class="btn btn-sm btn-outline-danger"
+                           href="/Datasets/Delete?id=@d.Id&q=@Model.Q">
+                            Delete
+                        </a>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
 }
-
